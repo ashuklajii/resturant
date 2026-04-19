@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chef Dashboard - Kitchen Orders</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1>👨‍🍳 Kitchen Dashboard</h1>
+            <div class="refresh-badge">
+                Auto-refresh: ON
+            </div>
+        </div>
+    </header>
+
+    <!-- Filter Section -->
+    <div class="container">
+        <div class="filter-section">
+            <button class="filter-btn active" onclick="filterOrders('all')">All</button>
+            <button class="filter-btn" onclick="filterOrders('pending')">Pending</button>
+            <button class="filter-btn" onclick="filterOrders('preparing')">Preparing</button>
+            <button class="filter-btn" onclick="filterOrders('ready')">Ready</button>
+        </div>
+    </div>
+
+    <!-- Orders Grid -->
+    <div class="container">
+        <div class="orders-grid" id="orders-grid">
+            <!-- Orders will be loaded here -->
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Initialize chef page
+        window.onload = function() {
+            loadChefOrders();
+            // Auto-refresh every 1 second
+            setInterval(loadChefOrders, 1000);
+        };
+    </script>
+</body>
+</html>

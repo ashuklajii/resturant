@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Restaurant Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1>🧑‍💼 Admin Dashboard</h1>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <div class="container">
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('sales')">📊 Sales</button>
+            <button class="tab-btn" onclick="switchTab('menu')">🍽️ Menu</button>
+            <button class="tab-btn" onclick="switchTab('qr')">📱 QR Codes</button>
+        </div>
+    </div>
+
+    <!-- SECTION 1: SALES DASHBOARD -->
+    <div class="container tab-content active" id="sales-tab">
+        <!-- Sales Cards -->
+        <div class="sales-grid">
+            <div class="sales-card">
+                <div class="sales-icon">📅</div>
+                <div class="sales-info">
+                    <h3>Today's Sales</h3>
+                    <p class="sales-amount" id="sales-today">₹0</p>
+                </div>
+            </div>
+            
+            <div class="sales-card">
+                <div class="sales-icon">📆</div>
+                <div class="sales-info">
+                    <h3>Weekly Sales</h3>
+                    <p class="sales-amount" id="sales-weekly">₹0</p>
+                </div>
+            </div>
+            
+            <div class="sales-card">
+                <div class="sales-icon">📊</div>
+                <div class="sales-info">
+                    <h3>Monthly Sales</h3>
+                    <p class="sales-amount" id="sales-monthly">₹0</p>
+                </div>
+            </div>
+            
+            <div class="sales-card">
+                <div class="sales-icon">💰</div>
+                <div class="sales-info">
+                    <h3>Yearly Sales</h3>
+                    <p class="sales-amount" id="sales-yearly">₹0</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Date Picker Section -->
+        <div class="date-picker-section">
+            <h2>Custom Date Sales</h2>
+            <div class="date-picker-form">
+                <input type="date" id="custom-date" class="date-input">
+                <button onclick="getSalesByDate()" class="btn btn-primary">Get Sales</button>
+            </div>
+            <div class="custom-sales-result">
+                <h3>Selected Date Sales</h3>
+                <p class="sales-amount" id="sales-custom">₹0</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 2: MENU MANAGEMENT -->
+    <div class="container tab-content" id="menu-tab">
+        <!-- Add New Item Form -->
+        <div class="card">
+            <h2>Add New Menu Item</h2>
+            <form class="menu-form" onsubmit="addMenuItem(event)">
+                <input type="text" id="item-name" placeholder="Item Name" required>
+                <input type="number" id="item-price" placeholder="Price" min="1" required>
+                <button type="submit" class="btn btn-primary">Add Item</button>
+            </form>
+        </div>
+
+        <!-- Menu Items List -->
+        <div class="menu-management-grid" id="menu-management-grid">
+            <!-- Menu items will be loaded here -->
+        </div>
+    </div>
+
+    <!-- SECTION 3: QR CODE GENERATOR -->
+    <div class="container tab-content" id="qr-tab">
+        <!-- QR Generator Form -->
+        <div class="card">
+            <h2>Generate QR Codes</h2>
+            <form class="qr-form" onsubmit="generateQRCodes(event)">
+                <label for="num-tables">Number of Tables:</label>
+                <input type="number" id="num-tables" placeholder="Enter number of tables" min="1" max="100" required>
+                <button type="submit" class="btn btn-primary">Generate QR Codes</button>
+            </form>
+        </div>
+
+        <!-- QR Codes Grid -->
+        <div class="qr-grid" id="qr-grid">
+            <!-- QR codes will be generated here -->
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal" id="edit-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Menu Item</h2>
+                <button class="close-btn" onclick="closeEditModal()">✕</button>
+            </div>
+            <form class="menu-form" onsubmit="updateMenuItem(event)">
+                <input type="hidden" id="edit-item-id">
+                <input type="text" id="edit-item-name" placeholder="Item Name" required>
+                <input type="number" id="edit-item-price" placeholder="Price" min="1" required>
+                <button type="submit" class="btn btn-primary">Update Item</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Overlay -->
+    <div class="modal-overlay" id="modal-overlay" onclick="closeEditModal()"></div>
+
+    <!-- Loading Spinner -->
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- QR Code Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Initialize admin page
+        window.onload = function() {
+            loadSalesData();
+            loadMenuManagement();
+        };
+    </script>
+</body>
+</html>
